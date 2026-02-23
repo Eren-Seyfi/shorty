@@ -1,21 +1,13 @@
 <?php
 
-use App\Http\Controllers\RedirectShortLinkController;
-use App\Http\Controllers\ShortLinkStatusController;
+use App\Http\Controllers\PublicPageController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('pages.home');
-});
+Route::get('/', [PublicPageController::class, 'home'])->name('home');
 
+Route::get('/status/{reason}', [PublicPageController::class, 'status'])
+    ->name('status')
+    ->whereIn('reason', ['disabled', 'not-started', 'expired', 'not-found']);
 
-
-
-Route::get('/link/status/{reason}', ShortLinkStatusController::class)
-    ->where('reason', 'disabled|not-started|expired')
-    ->name('status');
-
-
-
-Route::get('/{code}', RedirectShortLinkController::class)
-    ->where('code', '[a-zA-Z0-9_-]{1,32}');
+Route::get('/{code}', [PublicPageController::class, 'redirect'])
+    ->where('code', '[A-Za-z0-9_-]{1,32}');

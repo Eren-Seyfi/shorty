@@ -4,8 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Support\Carbon;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Carbon;
 
 class ShortLink extends Model
 {
@@ -34,13 +35,17 @@ class ShortLink extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function clicks(): HasMany
+    {
+        return $this->hasMany(ShortLinkClick::class);
+    }
+
     /**
      * Link şu anda yayında mı?
      * - is_active false ise kapalı
      * - starts_at gelecekteyse henüz yayında değil
      * - expires_at geçmişteyse süresi dolmuş
      */
-
     public function isLive(?Carbon $now = null): bool
     {
         $now ??= now();
@@ -49,11 +54,11 @@ class ShortLink extends Model
             return false;
         }
 
-        if ($this->starts_at && $this->starts_at->isFuture()) {
+        if ($this->starts_at?->isFuture()) {
             return false;
         }
 
-        if ($this->expires_at && $this->expires_at->isPast()) {
+        if ($this->expires_at?->isPast()) {
             return false;
         }
 
@@ -67,5 +72,4 @@ class ShortLink extends Model
     {
         return url('/' . $this->code);
     }
-
 }
