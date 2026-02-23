@@ -71,21 +71,18 @@ class PageForm
                         ->columnSpanFull()
                         ->helperText('İpucu: Kırık link sayfasında kısa, net bir mesaj ve yönlendirme metni kullan.')
 
-                        // ✅ Görsel / dosya yükleme ayarları
-                        ->fileAttachmentsDisk('public') // ör: public | s3
+                        // ✅ Doğrudan public/ içine yaz
+                        ->fileAttachmentsDisk('public_root')
                         ->fileAttachmentsDirectory('pages/attachments')
-                        ->fileAttachmentsVisibility('public') // public | private
+                        ->fileAttachmentsVisibility('public')
 
-                        // ✅ Yüklenen görseller için kısıtlar
                         ->fileAttachmentsAcceptedFileTypes([
                             'image/png',
                             'image/jpeg',
                             'image/webp',
                             'image/gif',
                         ])
-                        ->fileAttachmentsMaxSize(5120) // KB => 5MB
-
-                        // ✅ Editörde görsel boyutlandırma
+                        ->fileAttachmentsMaxSize(5120)
                         ->resizableImages(),
                 ])
                 ->columnSpanFull(),

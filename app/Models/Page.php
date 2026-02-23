@@ -22,7 +22,6 @@ class Page extends Model
         return [
             'is_active' => 'boolean',
             'key' => PageKey::class, // string <-> enum
-            'content' => 'array',    // RichEditor::json() => TipTap JSON
         ];
     }
 }

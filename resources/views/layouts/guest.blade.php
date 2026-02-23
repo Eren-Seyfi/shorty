@@ -137,6 +137,93 @@
                   background: rgba(255, 255, 255, .06);
                   margin-bottom: 14px;
             }
+
+            /* =========================
+               PROSE (İÇERİK) MOBİL UYUM
+               ========================= */
+            .fi-prose {
+                  max-width: 100%;
+                  overflow-wrap: anywhere;
+                  word-break: break-word;
+            }
+
+            /* Editör bazen inline style / width / height basar:
+               Biz burada taşmayı kesin engelliyoruz. */
+            .fi-prose img,
+            .fi-prose video,
+            .fi-prose iframe,
+            .fi-prose embed,
+            .fi-prose object {
+                  max-width: 100% !important;
+            }
+
+            /* Resimler kart dışına taşmasın + oran korunsun */
+            .fi-prose img {
+                  width: 100% !important;
+                  height: auto !important;
+                  display: block;
+                  border-radius: 14px;
+            }
+
+            /* Eğer küçük resimler büyümesin istersen aşağıyı aç:
+            .fi-prose img {
+                  width: auto !important;
+            }
+            */
+
+            /* Video/iframe gibi embedler */
+            .fi-prose iframe,
+            .fi-prose embed,
+            .fi-prose object,
+            .fi-prose video {
+                  width: 100% !important;
+                  height: auto;
+                  border-radius: 14px;
+            }
+
+            /* Kod blokları / uzun metinler taşarsa yatay kaydır */
+            .fi-prose pre {
+                  max-width: 100%;
+                  overflow: auto;
+                  padding: 12px;
+                  border-radius: 14px;
+                  background: rgba(255, 255, 255, .06);
+                  border: 1px solid var(--border);
+            }
+
+            /* Tablolar mobilde taşmasın */
+            .fi-prose table {
+                  display: block;
+                  width: 100%;
+                  overflow-x: auto;
+                  border-collapse: collapse;
+            }
+
+            /* Linkler çok uzunsa kır */
+            .fi-prose a {
+                  word-break: break-word;
+                  overflow-wrap: anywhere;
+            }
+
+            /* Mobilde kart padding/başlık ölçekleme */
+            @media (max-width: 640px) {
+                  .wrap {
+                        padding: 16px;
+                  }
+
+                  .card {
+                        padding: 18px;
+                        border-radius: 18px;
+                  }
+
+                  h1 {
+                        font-size: 24px;
+                  }
+
+                  p {
+                        font-size: 14px;
+                  }
+            }
       </style>
 </head>
 
@@ -144,11 +231,6 @@
       <div class="wrap">
             <div class="card">
                   <div class="top">
-                        <div class="brand">
-                              <span class="dot"></span>
-                              <span>{{ config('app.name') }}</span>
-                        </div>
-
                         @yield('badge')
                   </div>
 
